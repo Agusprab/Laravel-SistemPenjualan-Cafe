@@ -1,0 +1,142 @@
+@extends('../layout/main')
+@section('title', $title)
+
+
+@section('body')
+
+
+<body class="animsition">
+    <div class="page-wrapper">
+ 
+           
+    @extends('admin.include.sidebar')
+    @extends('admin.include.header')
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+        
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                   
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- USER DATA-->
+                                <div class="user-data m-b-30">
+                                    <h3 class="title-3 m-b-30">
+                                        <i class="zmdi zmdi-account-calendar"></i>Data Pegawai</h3>
+                                    <div class="filters m-b-45">
+                                        <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
+                                            <select class="js-select2" name="property">
+                                                <option selected="selected">All Properties</option>
+                                                <option value="">Products</option>
+                                                <option value="">Services</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
+                                        </div>
+                                        <div class="rs-select2--dark rs-select2--sm rs-select2--border">
+                                            <select class="js-select2 au-select-dark" name="time">
+                                                <option selected="selected">All Time</option>
+                                                <option value="">By Month</option>
+                                                <option value="">By Day</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
+                                        </div>
+                                    </div>
+                            @if(session()->has('alertSuccessAdd'))
+                                    <div class="p-2">                                  
+                                        <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+                                            <span class="badge badge-pill badge-success">Success</span>
+                                            {{ session('alertSuccessAdd')}}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                            @endif
+                            @if(session()->has('alertSuccessDelete'))
+                            <div class="p-2">                                  
+                                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                                    <span class="badge badge-pill badge-danger">Delete</span>
+                                    {{ session('alertSuccessDelete')}}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                           @endif
+                                    <div class="add-data ml-4"> 
+                                        <a href="{{route('manageuser')}}" class="btn btn-info btn-sm "><- Kembali</a>
+                                        <a href="{{ url('/admin/restoreall')}}"class="btn btn-success btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> kembalikan Semua Data</a>
+                                    </div>
+                                    <div class=" pl-5 pr-5 pt-3">
+                                        <table id="table_id" class="table display">
+                                            <thead>
+                                                <tr>
+                                                    <td>#</td>
+                                                    <td>name</td>
+                                                    <td>Username </td>
+                                                    <td>role</td>
+                                                    <td>Created at</td>
+                                                    <td>Action</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($dataPegawai as $pegawai )
+                                                <tr>
+                                                    <td>
+                                                        <div class="table-data__info"> {{$loop->iteration}} </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="table-data__info">
+                                                            <h6>{{ $pegawai->name}}</h6>
+                                                            <span>
+                                                                <a href="#">{{ $pegawai->email}}</a>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-lowercase table-data__info">
+                                                            <h6><span>{{ $pegawai->username}}</span></h6>                                                          
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="role {{ ($pegawai->role) == "admin" ? 'admin' : 'user'}}">{{ $pegawai->role}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="table-data__info">
+                                                            <h6>{{ $pegawai->created_at}}</h6>                                                          
+                                                        </div>
+                                                    </td>
+                                               
+                                                    <td>
+                                                        <a href="{{ url('admin/manageuser/restore/pegawaiid='. $pegawai->id)}}" class="btn btn-success"><i class="fa fa-recycle" aria-hidden="true"></i></a>
+                                                           <a href="#" class="btn btn-danger forcedelete" data-id="{{ $pegawai->id}}" data-name="{{ $pegawai->name}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                    </td> 
+                                                </tr>
+                                                @endforeach
+                                                                                 
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                   
+                                </div>
+                                <!-- END USER DATA-->
+                            </div>                        
+                        </div>                    
+                    
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+@endsection
